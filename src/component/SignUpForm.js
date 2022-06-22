@@ -1,6 +1,7 @@
 import React from 'react';
-import {useFormik} from 'formik';
+import {Formik} from 'formik';
 import {useNavigate} from 'react-router-dom'
+
 export default function SignUpForm() {
     const validate = values => {
         const errors = {};
@@ -22,58 +23,71 @@ export default function SignUpForm() {
             errors.email = 'Invalid email address';
         }
 
+        console.log(errors)
         return errors;
     };
 
     const navigate = useNavigate();
-    const formik = useFormik({
-        initialValues: {
-            email: "lala@g.c",
-            firstName: "Mahadi Hasan",
-            lastName:"Joy",
-            password:"********"
-        },
-        validate
-        ,
-        onSubmit: values => {
-            // console.log(formik.values.email, formik.values.firstName, formik.values.lastName, formik.values.password)
-            navigate('/signIn',{replace: true})
-        },
-    });
+    // const formik = useFormik({
+    //     initialValues: {
+    //         email: "lala@g.c",
+    //         firstName: "Mahadi Hasan",
+    //         lastName:"Joy",
+    //         password:"********"
+    //     },
+    //     validate
+    //     ,
+    //     onSubmit: values => {
+    //         // console.log(formik.values.email, formik.values.firstName, formik.values.lastName, formik.values.password)
+    //         navigate('/signIn',{replace: true})
+    //     },
+    // });
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="email">Email Address</label>
-            <input
-                id="email"
-                name="email"
-                type="email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-            /> <br/>{formik.errors.email ? <div>">{formik.errors.email}</div> : null}<br/>
-            <label htmlFor="firstName">First Name</label>
-            <input
-                id="firstName"
-                name="firstName"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.firstName}
-            /><br/>{formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}<br/>
-            <label htmlFor="lastName">Last Name</label>
-            <input
-                id="lastName"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.lastName}
-            /><br/>{formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}<br/>
-            <label htmlFor="password">Password</label>
-            <input
-                id="password"
-                name = "password"
-                type="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-            /><br/>
-            <button type="submit">Submit</button>
-        </form>
+        <Formik initialValues={{
+            email: "lala@g.c", firstName: "Mahadi Hasan",
+            lastName: "Joy",
+            password: "********"
+        }}
+                onSubmit={(values, {setSubmitting}) => {
+                    setTimeout(() => {
+                        setSubmitting(false);
+                    }, 400);
+                }}>
+            {formik => (
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                        id="email"
+                        type="email"
+                        {...formik.getFieldProps("email")}
+                    />
+                    {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}<br/>
+                    <label htmlFor="firstName">First Name</label>
+                    <input
+                        id="firstName"
+                        type="text"
+                        {...formik.getFieldProps("firstName")}
+                    />
+                    {formik.touched.firstName && formik.errors.firstName ?
+                        <div>{formik.errors.firstName}</div> : null}<br/>
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                        id="lastName"
+                        type="text"
+                        {...formik.getFieldProps("lastName")}
+                    />
+                    {formik.touched.lastName && formik.errors.lastName ?
+                        <div>{formik.errors.lastName}</div> : null}<br/>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        {...formik.getFieldProps("password")}
+                    /><br/>
+                    <button type="submit">Submit</button>
+                </form>
+            )}
+        </Formik>
+
     );
 }
