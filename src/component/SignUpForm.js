@@ -9,7 +9,7 @@ export default function SignUpForm() {
     const navigate = useNavigate();
     return (<Formik
             initialValues={{
-                email: "lala@g.c", firstName: "Mahadi Hasan", lastName: "Joy", password: "********"
+                email: "priotababu@gmail.com", firstName: "Pri", lastName: "Joy", password: ""
             }}
             validationSchema={Yup.object({
                 firstName:Yup.string().min(2,"Too Short").max(25,"Too Many").required("Required*"),
@@ -21,7 +21,7 @@ export default function SignUpForm() {
                     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')            })}
             onSubmit={(values, {setSubmitting}) => {
                 setTimeout(() => {
-                    navigate("/signIn")
+                    navigate("/home")
                     alert(JSON.stringify(values,null,10))
                     setSubmitting(false);
                 }, 400);
