@@ -1,19 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-export default function Home(){
-    return(
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <a
-              className="App-link"
-              href="https://formik-try.herokuapp.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-                Babu!!!! Ei form ta valona??? Lalalalalala.....
-            </a>
-          </header>
-        </div>
-)
+import { Formik, Form, Field } from 'formik';
+
+export default function Home() {
+   return(
+       <div>
+           <h1>Social Profiles</h1>
+           <Formik
+               initialValues={{
+                   social: {
+                       facebook: '',
+                       twitter: '',
+                   },
+               }}
+               onSubmit={values => {
+                   // same shape as initial values
+                   console.log(values);
+               }}
+           >
+               <Form>
+                   <Field name="social.facebook"/>
+                   <Field name="social.twitter"/>
+                   <button type="submit">Submit</button>
+               </Form>
+           </Formik>
+       </div>
+   )
 }
