@@ -1,13 +1,13 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import ReactPlayer from 'react-player'
 import Player from './Player'
+import SignUpForm from "./SignUpForm";
+import Header from "./Header";
 
 export default function Home() {
    return(
        <div>
-           <h1>Training Pro</h1>
-           <Player />
+           <Header/>
+           <SignUpForm />
        </div>
    )
 }

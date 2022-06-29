@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Formik, useField} from 'formik';
 import {useNavigate} from 'react-router-dom'
 import * as Yup from 'yup';
+import Header from "./Header";
 
 export default function SignUpForm() {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function SignUpForm() {
     };
     return (
         <>
-            <h1>Subscribe!</h1>
+            <Header/>
             <Formik
                 initialValues={{
                     firstName: '',
