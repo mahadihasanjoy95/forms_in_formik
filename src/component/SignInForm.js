@@ -4,7 +4,7 @@ import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup';
 import {useNavigate} from "react-router-dom";
 
-export default function SignInForm(){
+export default function SignInForm() {
 
     const navigate = useNavigate();
     const MyTextInput = ({label, ...props}) => {
@@ -17,13 +17,14 @@ export default function SignInForm(){
             </>
         );
     };
-    return(
+    return (
 
         <>
             <Header/>
+            <br/>
             <Formik initialValues={{
-                email : "example@g.c",
-                password : "abcdefg"
+                email: "example@g.c",
+                password: "abcdefg"
             }}
                     validationSchema={Yup.object({
                         email: Yup.string()
@@ -31,9 +32,9 @@ export default function SignInForm(){
                         password: Yup.string()
                             .required('Required')
                     })}
-                    onSubmit={(values,{setSubmitting})=>{
-                alert(JSON.stringify(values))
-            }}>
+                    onSubmit={(values, {setSubmitting}) => {
+                        alert(JSON.stringify(values))
+                    }}>
                 <Form>
                     <MyTextInput
                         label="Email Address"
@@ -51,7 +52,7 @@ export default function SignInForm(){
                     <button type="submit">LogIn</button>
                 </Form>
             </Formik>
-          
+
         </>
     );
 }

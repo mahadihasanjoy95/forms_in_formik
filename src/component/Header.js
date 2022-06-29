@@ -9,8 +9,6 @@ export default function Header(props) {
             <div>
                 <a  href="/" onClick={()=>{navigate("/")}}>
                     <div className="row">
-                        {/*<img className="small" src="/favicon.ico" alt="icon"/>*/}
-                        <h1>Simple Learning Application</h1>
                     </div>
                 </a>
             </div>

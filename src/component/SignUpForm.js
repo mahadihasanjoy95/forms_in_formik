@@ -47,6 +47,7 @@ export default function SignUpForm() {
     return (
         <>
             <Header/>
+            <br/>
             <Formik
                 initialValues={{
                     firstName: '',
