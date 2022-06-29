@@ -3,8 +3,11 @@ import {Form, Formik, useField} from 'formik';
 import {useNavigate} from 'react-router-dom'
 import * as Yup from 'yup';
 import Header from "./Header";
+import axios from "axios";
 
 export default function SignUpForm() {
+    const baseURL = "http://localhost:8080";
+
     const navigate = useNavigate();
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
@@ -77,11 +80,24 @@ export default function SignUpForm() {
                         .required('Required'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        navigate("/home")
-                        setSubmitting(false);
-                    }, 400);
+                    return axios({
+                        method: "POST",
+                        url: "http://localhost:5000/api/users/login",
+                        data: values,
+                        auth: {
+                            email,
+                            password
+                        }
+                    })
+                        .then(response => {
+                            actions.setSubmitting(false);
+                            actions.resetForm();
+                            handleServerResponse(true, "Logged In!");
+                        })
+                        .catch(error => {
+                            actions.setSubmitting(false);
+                            handleServerResponse(false, error.response.data.error);
+                        });
                 }}
             >
                 <Form>
