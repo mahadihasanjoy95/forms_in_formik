@@ -23,7 +23,7 @@ export default class Player extends Component {
                     light="https://i.picsum.photos/id/1062/5092/3395.jpg?hmac=o9m7qeU51uOLfXvepXcTrk2ZPiSBJEkiiOp-Qvxja-k"
                     ref={this.ref}
                     onReady={this.onReady}
-                    url='https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd'
+                    url='http://192.168.1.252:4200/78F24E1EB9/5EBC3C606D/AD02A024EB/output.mpd'
                     playing
                 />
             </div>

@@ -11,92 +11,65 @@ export default function SignUpForm() {
     const navigate = useNavigate();
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
-        return (
-            <>
+        return (<>
                 <label htmlFor={props.id || props.name}>{label}</label>
                 <input className="text-input" {...field} {...props} />
                 {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
-            </>
-        );
+            </>);
     };
     const MyCheckbox = ({children, ...props}) => {
         const [field, meta] = useField({...props, type: 'checkbox'});
-        return (
-            <div>
+        return (<div>
                 <label className="checkbox-input">
                     <input type="checkbox" {...field} {...props} />
                     {children}
                 </label>
-                {meta.touched && meta.error ? (
-                    <div className="error">{meta.error}</div>
-                ) : null}
-            </div>
-        );
+                {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
+            </div>);
     };
 
 
     const MySelect = ({label, ...props}) => {
         const [field, meta] = useField(props);
-        return (
-            <div>
+        return (<div>
                 <label htmlFor={props.id || props.name}>{label}</label>
                 <select {...field} {...props} />
-                {meta.touched && meta.error ? (
-                    <div className="error">{meta.error}</div>
-                ) : null}
-            </div>
-        );
+                {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
+            </div>);
     };
-    return (
-        <>
+    return (<>
             <Header/>
             <br/>
             <Formik
                 initialValues={{
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    acceptedTerms: false, // added for our checkbox
+                    firstName: '', lastName: '', email: '', acceptedTerms: false, // added for our checkbox
                     jobType: '', // added for our select
                 }}
                 validationSchema={Yup.object({
                     firstName: Yup.string()
                         .max(15, 'Must be 15 characters or less')
-                        .required('Required'),
-                    lastName: Yup.string()
+                        .required('Required'), lastName: Yup.string()
                         .max(20, 'Must be 20 characters or less')
-                        .required('Required'),
-                    email: Yup.string()
+                        .required('Required'), email: Yup.string()
                         .email('Invalid email address')
-                        .required('Required'),
-                    acceptedTerms: Yup.boolean()
+                        .required('Required'), acceptedTerms: Yup.boolean()
                         .required('Required')
-                        .oneOf([true], 'You must accept the terms and conditions.'),
-                    jobType: Yup.string()
-                        .oneOf(
-                            ['designer', 'development', 'product', 'other'],
-                            'Invalid Job Type'
-                        )
+                        .oneOf([true], 'You must accept the terms and conditions.'), jobType: Yup.string()
+                        .oneOf(['designer', 'development', 'product', 'other'], 'Invalid Job Type')
                         .required('Required'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
                     return axios({
-                        method: "POST",
-                        url: "http://localhost:5000/api/users/login",
-                        data: values,
-                        auth: {
-                            email,
-                            password
-                        }
+                        method: "POST", url: "http://localhost:8080/user/signUp", data: values,
                     })
                         .then(response => {
-                            actions.setSubmitting(false);
-                            actions.resetForm();
-                            handleServerResponse(true, "Logged In!");
+                            console.log(response)
+                            alert(response.data.message)
+                            navigate("/signIn")
                         })
                         .catch(error => {
-                            actions.setSubmitting(false);
-                            handleServerResponse(false, error.response.data.error);
+                            alert(error.response.data.message)
+                            console.log(error)
                         });
                 }}
             >
@@ -143,6 +116,5 @@ export default function SignUpForm() {
                     <button type="submit">Submit</button>
                 </Form>
             </Formik>
-        </>
-    );
+        </>);
 }
