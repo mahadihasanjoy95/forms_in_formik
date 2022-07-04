@@ -5,7 +5,7 @@ import Player from "./Player";
 export default function Home() {
     return (
         <div>
-            <Player/>
+            <SignUpForm/>
         </div>
     )
 }
