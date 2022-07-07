@@ -23,20 +23,23 @@ export default function UserAddForm(props) {
     };
     return (<div>
         <Formik initialValues={{
-            firstName: "", lastName: "", district: "", division: "", userType: ""
+            first_name: "", last_name: "", district: "", division: "", user_type: ""
         }}
                 validationSchema={Yup.object({
-                    firstName: Yup.string()
-                        .required('Required'), lastName: Yup.string()
-                        .required('Required'), userType: Yup.string()
+                    first_name: Yup.string()
+                        .required('Required'), last_name: Yup.string()
+                        .required('Required'), user_type: Yup.string()
                         .oneOf(['admin', 'employee'], 'Invalid User Type')
                         .required('Required'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
                     return axios({
-                        method: "POST", url: "http://localhost:8080/user/signIn", data: values,
+                        method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
                     })
                         .then(response => {
+                            console.log("User Added")
+                            alert("User Added")
+                            window.location.reload()
                         })
                         .catch(error => {
                             alert(error.response.data.message)
@@ -46,14 +49,14 @@ export default function UserAddForm(props) {
             <Form>
                 <MyTextInput
                     label="First Name"
-                    name="firstName"
+                    name="first_name"
                     type="text"
                     placeholder="John"
                 />
                 <br/>
                 <MyTextInput
                     label="Last Name"
-                    name="lastName"
+                    name="last_name"
                     type="text"
                     placeholder="Doe"
                 />
@@ -71,7 +74,7 @@ export default function UserAddForm(props) {
                     type="text"
                     placeholder="Dhaka"
                 />
-                <MySelect label="User Type" name="userType">
+                <MySelect label="User Type" name="user_type">
                     <option value="">Select Your User Type</option>
                     <option value="admin">Admin</option>
                     <option value="employee">Employee</option>
