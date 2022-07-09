@@ -4,9 +4,16 @@ import axios from "axios";
 import CustomModal from "./CustomModal";
 
 const Tabs = () => {
+
     const [activeTab, setActiveTab] = useState("tab1");
     const [users, setUsers] = useState([])
+    const addUsersToArray = () => {
+        setUsers([...users, `Entry ${users.length}`]);
+    };
 
+    const addUser = (u) => {
+        setUsers(oldArray => [...oldArray, u]);
+    }
     const handleTab1 = () => {
         setActiveTab("tab1");
         fetchEmployees()
@@ -34,8 +41,7 @@ const Tabs = () => {
             <li onClick={handleTab1} className={activeTab === "tab1" ? "active" : ""}>Employees</li>
             <li onClick={handleTab2} className={activeTab === "tab2" ? "active" : ""}>Admins</li>
         </ul>
-        {/*<TabModal/>*/}
-        <CustomModal/>
+        <CustomModal addUser = {addUser}/>
         <div className="outlet">
             <CommonTab users={users}/>
         </div>

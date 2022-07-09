@@ -14,6 +14,7 @@ const style = {
     p: 4,
 };
 export default function CustomModal(props) {
+    const {addUser} = props
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -30,7 +31,7 @@ export default function CustomModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <UserAddForm/>
+                    <UserAddForm addUser = {addUser} handleClose = {handleClose}/>
                 </Box>
             </Modal>
         </div>

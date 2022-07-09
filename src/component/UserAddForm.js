@@ -6,11 +6,9 @@ import {Country, State, City} from 'country-state-city';
 
 
 export default function UserAddForm(props) {
-
-    const countryCode = 'BD';
-    const country = Country.getCountryByCode(countryCode);
-    const updatedStates = State.getStatesOfCountry(country.isoCode);
-    const cities = City.getCitiesOfCountry(country.isoCode);
+    const {addUser,handleClose} = props
+    const updatedStates = State.getStatesOfCountry('BD');
+    const cities = City.getCitiesOfCountry('BD');
 
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
@@ -58,9 +56,9 @@ export default function UserAddForm(props) {
                         method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
                     })
                         .then(response => {
-                            console.log("User Added")
                             alert("User Added")
-                            window.location.reload()
+                            addUser(values)
+                            handleClose()
                         })
                         .catch(error => {
                             alert(error.response.data.message)
@@ -81,24 +79,19 @@ export default function UserAddForm(props) {
                     type="text"
                     placeholder="Doe"
                 />
-                <br/>
                 <MySelect label="District" name="division">
                     <option value="">Select Your Division</option>
                     {updatedStates.map((state) => (<option value={state.name}>{state.name}</option>))}
                 </MySelect>
-                <br/>
                 <MySelect label="City" name="district">
                     <option value="">Select Your District</option>
                     {cities.map((city) => (<option value={city.name}>{city.name}</option>))}
                 </MySelect>
-                <br/>
                 <MySelect label="User Type" name="user_type">
                     <option value="">Select Your User Type</option>
                     <option value="admin">Admin</option>
                     <option value="employee">Employee</option>
                 </MySelect>
-                <br/>
-
                 <br/>
                 <button type="submit">Add</button>
             </Form>
