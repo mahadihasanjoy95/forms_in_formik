@@ -48,12 +48,10 @@ export default function UserAddForm(props) {
                         .required('User Type Required'),
                     district: Yup
                         .string()
-                        .matches(/^[A-Za-z' ]*$/, 'Please enter valid district name')
-                        .max(40),
+                        .max(100),
                     division: Yup
                         .string()
-                        .matches(/^[A-Za-z' ]*$/, 'Please enter valid city name')
-                        .max(40),
+                        .max(100),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
                     return axios({
@@ -85,10 +83,12 @@ export default function UserAddForm(props) {
                 />
                 <br/>
                 <MySelect label="District" name="division">
+                    <option value="">Select Your Division</option>
                     {updatedStates.map((state) => (<option value={state.name}>{state.name}</option>))}
                 </MySelect>
                 <br/>
                 <MySelect label="City" name="district">
+                    <option value="">Select Your District</option>
                     {cities.map((city) => (<option value={city.name}>{city.name}</option>))}
                 </MySelect>
                 <br/>
