@@ -7,12 +7,10 @@ const Tabs = () => {
 
     const [activeTab, setActiveTab] = useState("tab1");
     const [users, setUsers] = useState([])
-    const addUsersToArray = () => {
-        setUsers([...users, `Entry ${users.length}`]);
-    };
 
     const addUser = (u) => {
-        setUsers(oldArray => [...oldArray, u]);
+        if((activeTab==="tab1" && u.user_type==="employee")||(activeTab==="tab2" && u.user_type==="admin"))
+            setUsers(oldArray => [...oldArray, u]);
     }
     const handleTab1 = () => {
         setActiveTab("tab1");
