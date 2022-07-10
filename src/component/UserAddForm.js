@@ -1,17 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import {City, State} from 'country-state-city';
+import {useNavigate} from "react-router-dom";
 
 
 export default function UserAddForm(props) {
 
-    const {user,addUser, handleClose, editUser} = props
+    const {user,addUser, handleClose, editUser, page} = props
     const updatedStates = State.getStatesOfCountry('BD');
     const cities = City.getCitiesOfCountry('BD');
+    const navigate = useNavigate();
 
-    {console.log(user)}
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
         return (<>
@@ -29,7 +30,6 @@ export default function UserAddForm(props) {
         </div>);
     };
     return (<div>
-        {console.log(user)}
         <Formik initialValues={{
             first_name: user.first_name, last_name: user.last_name, district: user.district, division: user.division, user_type: user.user_type
         }}
@@ -55,18 +55,33 @@ export default function UserAddForm(props) {
                         .max(100),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
-                    return axios({
-                        method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
-                    })
-                        .then(response => {
-                            alert("User Added")
-                            addUser(values)
-                            handleClose()
+                    if (page==="add"){
+                        return axios({
+                            method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
                         })
-                        .catch(error => {
-                            alert(error.response.data.message)
-                            console.log(error)
-                        });
+                            .then(response => {
+                                alert("User Added")
+                                addUser(values)
+                                handleClose()
+                            })
+                            .catch(error => {
+                                alert(error.response.data.message)
+                                console.log(error)
+                            });
+                    }else{
+                        return axios({
+                            method: "PUT", url: "https://60f2479f6d44f300177885e6.mockapi.io/users/"+user.id, data: values,
+                        })
+                            .then(response => {
+                                alert("User Edited")
+                                navigate("/")
+
+                            })
+                            .catch(error => {
+                                alert(error.response.data.message)
+                                console.log(error)
+                            });
+                    }
                 }}>
             <Form>
                 <MyTextInput
@@ -96,7 +111,7 @@ export default function UserAddForm(props) {
                     <option value="employee">Employee</option>
                 </MySelect>
                 <br/>
-                <button type="submit">Add</button>
+                {page==="add"?(<button type="submit">Add</button>):(<button type="submit">Edit</button>)}
             </Form>
         </Formik>
     </div>);

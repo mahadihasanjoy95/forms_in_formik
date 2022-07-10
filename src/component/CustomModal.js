@@ -36,7 +36,7 @@ export default function CustomModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <UserAddForm user = {user} addUser={addUser} handleClose={handleClose}/>
+                    <UserAddForm user = {user} addUser={addUser} handleClose={handleClose} page = "add"/>
                 </Box>
             </Modal>
         </div>

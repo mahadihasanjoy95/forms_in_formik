@@ -6,7 +6,7 @@ export default function UserEditPage() {
     const {state} = useLocation();
     {console.log(state)}
     return (<div className="outlet">
-        <UserAddForm user={state}/>
+        <UserAddForm user={state} page ="edit"/>
     </div>)
 
 }
