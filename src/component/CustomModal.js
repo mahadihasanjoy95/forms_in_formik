@@ -2,6 +2,7 @@ import React from "react";
 import {Box, Fab, Modal} from "@mui/material";
 import UserAddForm from "./UserAddForm";
 import AddIcon from '@mui/icons-material/Add';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -13,13 +14,17 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
 export default function CustomModal(props) {
+    let user = {
+        id: 0, first_name: "", last_name: "", division: "", district: "", user_type: ""
+    }
     const {addUser} = props
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    return(
+    return (
         <div className="outlet">
             <Fab className="bottomright" color="primary" aria-label="add" onClick={handleOpen}>
                 <AddIcon/>
@@ -31,7 +36,7 @@ export default function CustomModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <UserAddForm addUser = {addUser} handleClose = {handleClose}/>
+                    <UserAddForm user = {user} addUser={addUser} handleClose={handleClose}/>
                 </Box>
             </Modal>
         </div>

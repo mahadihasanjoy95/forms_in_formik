@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
-import {Country, State, City} from 'country-state-city';
+import {City, State} from 'country-state-city';
 
 
 export default function UserAddForm(props) {
-    const {addUser,handleClose} = props
+
+    const {user,addUser, handleClose, editUser} = props
     const updatedStates = State.getStatesOfCountry('BD');
     const cities = City.getCitiesOfCountry('BD');
 
+    {console.log(user)}
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
         return (<>
@@ -27,8 +29,9 @@ export default function UserAddForm(props) {
         </div>);
     };
     return (<div>
+        {console.log(user)}
         <Formik initialValues={{
-            first_name: "", last_name: "", district: "", division: "", user_type: ""
+            first_name: user.first_name, last_name: user.last_name, district: user.district, division: user.division, user_type: user.user_type
         }}
                 validationSchema={Yup.object({
                     first_name: Yup
