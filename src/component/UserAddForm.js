@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import axios from "axios";
 import {City, State} from 'country-state-city';
 import {useNavigate} from "react-router-dom";
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 
 export default function UserAddForm(props) {
 
@@ -12,6 +13,7 @@ export default function UserAddForm(props) {
     const updatedStates = State.getStatesOfCountry('BD');
     const cities = City.getCitiesOfCountry('BD');
     const navigate = useNavigate();
+
 
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
@@ -29,7 +31,9 @@ export default function UserAddForm(props) {
             {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
         </div>);
     };
+    const [disabled, setDisabled] = useState(false);
     return (<div>
+
         <Formik initialValues={{
             first_name: user.first_name, last_name: user.last_name, district: user.district, division: user.division, user_type: user.user_type
         }}
@@ -55,17 +59,17 @@ export default function UserAddForm(props) {
                         .max(100),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
+                    setDisabled(true);
                     if (page==="add"){
                         return axios({
                             method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
                         })
                             .then(response => {
-                                alert("User Added")
+
                                 addUser(values)
                                 handleClose()
                             })
                             .catch(error => {
-                                alert(error.response.data.message)
                                 console.log(error)
                             });
                     }else{
@@ -73,12 +77,10 @@ export default function UserAddForm(props) {
                             method: "PUT", url: "https://60f2479f6d44f300177885e6.mockapi.io/users/"+user.id, data: values,
                         })
                             .then(response => {
-                                alert("User Edited")
                                 navigate("/")
 
                             })
                             .catch(error => {
-                                alert(error.response.data.message)
                                 console.log(error)
                             });
                     }
@@ -111,7 +113,7 @@ export default function UserAddForm(props) {
                     <option value="employee">Employee</option>
                 </MySelect>
                 <br/>
-                {page==="add"?(<button type="submit">Add</button>):(<button type="submit">Edit</button>)}
+                {page==="add"?(<button disabled={disabled} type="submit"><AddCircleIcon/></button>):(<button type="submit"><EditAttributesIcon/></button>)}
             </Form>
         </Formik>
     </div>);

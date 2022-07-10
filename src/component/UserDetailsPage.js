@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Button, Table, TableBody, TableRow} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function UserDetailsPage(props) {
     let {id} = useParams();
@@ -19,7 +20,7 @@ export default function UserDetailsPage(props) {
             });
     }, []);
 
-    return (<div className="outlet">
+    return (<div className="Tabs">
         <Box
             component="form"
             sx={{
@@ -28,7 +29,7 @@ export default function UserDetailsPage(props) {
             noValidate
             autoComplete="off"
         >
-            <Table cellPadding="4" cellSpacing="5">
+            <Table class="center" cellPadding="4" cellSpacing="5">
                 <TableBody>
                     <TableRow>
                         <td>Id: {user.id}</td>
@@ -49,7 +50,7 @@ export default function UserDetailsPage(props) {
                         <td>User Type: {user.user_type}</td>
                     </TableRow>
                     <TableRow>
-                        <Button onClick={()=>{navigate("/userEdit:" + user.id,{state:user})}}>Edit User</Button>
+                        <Button onClick={()=>{navigate("/userEdit:" + user.id,{state:user})}}><EditIcon/>Edit User</Button>
                     </TableRow>
                 </TableBody>
             </Table>

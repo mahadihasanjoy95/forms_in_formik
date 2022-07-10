@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, Paper, Table, TableBody, TableHead, TableRow} from "@mui/material";
 import {useNavigate} from "react-router-dom"
+import PreviewIcon from '@mui/icons-material/Preview';
 
 export default function CommonTab(props) {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function CommonTab(props) {
                             <td>{user.district}</td>
                             <td><Button id={user.id} onClick={() => {
                                 navigate("/userDetails:" + user.id)
-                            }}>See Details</Button></td>
+                            }}><PreviewIcon/></Button></td>
                         </TableRow>)}
                 </TableBody>
             </Table>
