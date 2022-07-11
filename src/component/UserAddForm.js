@@ -39,12 +39,12 @@ export default function UserAddForm(props) {
         }}
                 validationSchema={Yup.object({
                     first_name: Yup
-                        .string()
+                        .string().trim()
                         .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
                         .max(40)
                         .required("First Name Required"),
                     last_name: Yup
-                        .string()
+                        .string().trim()
                         .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
                         .max(40)
                         .required("Last Name Required"),
