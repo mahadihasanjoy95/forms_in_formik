@@ -3,12 +3,23 @@ import {Box, Button, Table, TableBody, TableRow} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import EditIcon from '@mui/icons-material/Edit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function UserDetailsPage(props) {
     let {id} = useParams();
 
+    const notify = () => toast.error('User not found with provided ID: '+id.replace(":", ""), {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
     const [user, setUser] = useState({
-        id: 0, first_name: "", last_name: "", division: "", district: "", user_type: ""
+        id: null, first_name: "", last_name: "", division: "", district: "", user_type: ""
     })
     const navigate = useNavigate();
 
@@ -17,6 +28,9 @@ export default function UserDetailsPage(props) {
             .get("https://60f2479f6d44f300177885e6.mockapi.io/users/" + id.replace(":", ""))
             .then(response => {
                 setUser(response.data)
+            })
+            .catch(error => {
+                notify()
             });
     }, []);
 
@@ -55,6 +69,17 @@ export default function UserDetailsPage(props) {
                 </TableBody>
             </Table>
         </Box>
+        <ToastContainer
+            position="bottom-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
         </div>)
 
 }
