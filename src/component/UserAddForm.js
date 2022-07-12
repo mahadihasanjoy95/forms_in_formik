@@ -112,7 +112,7 @@ export default function UserAddForm(props) {
                     type="text"
                     placeholder="Doe"
                 />
-                StateVal = <MySelect label="District" name="division" >
+                <MySelect label="District" name="division" >
                     <option value="">Select Your Division</option>
                     {updatedStates.map((state) => (<option value={state.isoCode}>{state.name}</option>))}
                 </MySelect>
