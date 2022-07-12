@@ -28,7 +28,10 @@ export default function CommonTab(props) {
                             <td>{user.division}</td>
                             <td>{user.district}</td>
                             <td><Button id={user.id} onClick={() => {
-                                navigate("/userDetails:" + user.id)
+                                if (user.id===undefined){
+                                    window.location.reload()
+                                }else
+                                    navigate("/userDetails:" + user.id)
                             }}><PreviewIcon/></Button></td>
                         </TableRow>)}
                 </TableBody>

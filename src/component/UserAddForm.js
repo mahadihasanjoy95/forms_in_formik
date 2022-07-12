@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
@@ -9,11 +9,17 @@ import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 
 export default function UserAddForm(props) {
 
+
+    const [city,setCity] = useState([])
     const {user,addUser, handleClose, editUser, page} = props
     const updatedStates = State.getStatesOfCountry('BD');
     const cities = City.getCitiesOfCountry('BD');
     const navigate = useNavigate();
 
+    const updatedCities = (stateId) =>{
+        console.log(stateId)
+        City.getCitiesOfState(stateId)
+            .map((city) => ({ label: city.name, value: city.id, ...city }))};
 
     const MyTextInput = ({label, ...props}) => {
         const [field, meta] = useField(props);
@@ -32,6 +38,13 @@ export default function UserAddForm(props) {
         </div>);
     };
     const [disabled, setDisabled] = useState(false);
+    const formRef = useRef();
+    const [division, setDivision] = useState({});
+    useEffect(() => {
+        let lolo = City.getCitiesOfState("BD", division)
+        // console.log(lolo)
+        updatedCities(division)
+    }, [division]);
     return (<div>
 
         <Formik initialValues={{
@@ -84,7 +97,7 @@ export default function UserAddForm(props) {
                                 console.log(error)
                             });
                     }
-                }}>
+                }} innerRef={(formikActions) =>  formikActions?setDivision(formikActions.values.division):setDivision({})} >
             <Form>
                 <MyTextInput
                     label="First Name"
@@ -99,9 +112,9 @@ export default function UserAddForm(props) {
                     type="text"
                     placeholder="Doe"
                 />
-                <MySelect label="District" name="division">
+                StateVal = <MySelect label="District" name="division" >
                     <option value="">Select Your Division</option>
-                    {updatedStates.map((state) => (<option value={state.name}>{state.name}</option>))}
+                    {updatedStates.map((state) => (<option value={state.isoCode}>{state.name}</option>))}
                 </MySelect>
                 <MySelect label="City" name="district">
                     <option value="">Select Your District</option>
