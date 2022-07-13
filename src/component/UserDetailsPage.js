@@ -43,7 +43,7 @@ export default function UserDetailsPage(props) {
             noValidate
             autoComplete="off"
         >
-            <Table class="center" cellPadding="4" cellSpacing="5">
+            <Table className="center" cellPadding="4" cellSpacing="5">
                 <TableBody>
                     <TableRow>
                         <td>Id: {user.id}</td>
@@ -64,7 +64,7 @@ export default function UserDetailsPage(props) {
                         <td>User Type: {user.user_type}</td>
                     </TableRow>
                     <TableRow>
-                        <Button onClick={()=>{navigate("/userEdit:" + user.id,{state:user})}}><EditIcon/>Edit User</Button>
+                        <td><Button onClick={()=>{navigate("/userEdit:" + user.id,{state:user})}}><EditIcon/>Edit User</Button></td>
                     </TableRow>
                 </TableBody>
             </Table>
