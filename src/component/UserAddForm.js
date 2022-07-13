@@ -109,12 +109,12 @@ export default function UserAddForm(props) {
                     type="text"
                     placeholder="Doe"
                 />
-                <MySelect label="District" name="division">
+                <MySelect label="Division" name="division">
                     <option value="">Select Your Division</option>
                     {updatedStates.map((state) => state.isoCode === "06" || state.isoCode === "B" || state.isoCode === "13" || state.isoCode === "27" || state.isoCode === "34" || state.isoCode === "54" || state.isoCode === "55" || state.isoCode === "60" ?
                         <option key={state.isoCode} value={state.isoCode}>{state.name}</option> : null)}
                 </MySelect>
-                <MySelect label="City" name="district">
+                <MySelect label="District" name="district">
                     <option value="">Select Your District</option>
                     {cities.map((city) => (
                         <option key={city.latitude + city.longitude} value={city.name}>{city.name}</option>))}
