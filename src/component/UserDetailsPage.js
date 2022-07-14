@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function UserDetailsPage(props) {
     let {id} = useParams();
-
+    const [divisionForShow, setDivisionForShow] = useState("")
     const notify = () => toast.error('User not found with provided ID: '+id.replace(":", ""), {
         position: "bottom-left",
         autoClose: 5000,
@@ -28,6 +28,7 @@ export default function UserDetailsPage(props) {
             .get("https://60f2479f6d44f300177885e6.mockapi.io/users/" + id.replace(":", ""))
             .then(response => {
                 setUser(response.data)
+                setDivisionForShow(JSON.stringify(response.data.division).split("/")[0].replace("\"",""))
             })
             .catch(error => {
                 notify()
@@ -55,7 +56,7 @@ export default function UserDetailsPage(props) {
                         <td>Last Name: {user.last_name}</td>
                     </TableRow>
                     <TableRow>
-                        <td>Division: {user.division}</td>
+                        <td>Division: {divisionForShow}</td>
                     </TableRow>
                     <TableRow>
                         <td>City: {user.district}</td>

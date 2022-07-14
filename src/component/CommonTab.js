@@ -6,6 +6,7 @@ import PreviewIcon from '@mui/icons-material/Preview';
 export default function CommonTab(props) {
     const navigate = useNavigate();
     const {users} = props
+    let divisionForShow = ""
     return (
         <Paper style={{maxHeight: 400, overflow: 'auto'}}>
             <Table cellPadding="4" cellSpacing="5">
@@ -20,12 +21,13 @@ export default function CommonTab(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {users.map(user =>
+                    {users.map(user =>(
+                        divisionForShow = JSON.stringify(user.division).split("/")[0].replace("\"",""),
                         <TableRow key={user.id}>
                             <td></td>
                             <td>{user.first_name}</td>
                             <td>{user.last_name}</td>
-                            <td>{user.division}</td>
+                            <td>{divisionForShow}</td>
                             <td>{user.district}</td>
                             <td><Button id={user.id} onClick={() => {
                                 if (user.id===undefined){
@@ -33,7 +35,7 @@ export default function CommonTab(props) {
                                 }else
                                     navigate("/userDetails:" + user.id)
                             }}><PreviewIcon/></Button></td>
-                        </TableRow>)}
+                        </TableRow>))}
                 </TableBody>
             </Table>
         </Paper>

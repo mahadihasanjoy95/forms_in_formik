@@ -35,7 +35,9 @@ export default function UserAddForm(props) {
     useRef();
     const [division, setDivision] = useState({});
     useEffect(() => {
-        cities = City.getCitiesOfState("BD", division)
+        let stateCode = JSON.stringify(division);
+        stateCode = stateCode.substring(stateCode.indexOf("/") + 1).replace("\"","");
+        cities = City.getCitiesOfState("BD", stateCode)
     }, [division]);
     return (<div>
 
@@ -46,7 +48,8 @@ export default function UserAddForm(props) {
                 last_name: user.last_name,
                 district: user.district,
                 division: user.division,
-                user_type: user.user_type
+                user_type: user.user_type,
+                stateCode : null
             }}
             validationSchema={Yup.object({
                 first_name: Yup
@@ -111,8 +114,12 @@ export default function UserAddForm(props) {
                 />
                 <MySelect label="Division" name="division">
                     <option value="">Select Your Division</option>
-                    {updatedStates.map((state) => state.isoCode === "06" || state.isoCode === "B" || state.isoCode === "13" || state.isoCode === "27" || state.isoCode === "34" || state.isoCode === "54" || state.isoCode === "55" || state.isoCode === "60" ?
-                        <option key={state.isoCode} value={state.isoCode}>{state.name}</option> : null)}
+                    {updatedStates.map((state) =>
+                        state.isoCode === "06" || state.isoCode === "B"
+                    || state.isoCode === "13" || state.isoCode === "27"
+                    || state.isoCode === "34" || state.isoCode === "54"
+                    || state.isoCode === "55" || state.isoCode === "60" ?
+                        <option key={state.isoCode} value={state.name+"/"+state.isoCode}>{state.name}</option> : null)}
                 </MySelect>
                 <MySelect label="District" name="district">
                     <option value="">Select Your District</option>
