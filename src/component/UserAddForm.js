@@ -36,7 +36,7 @@ export default function UserAddForm(props) {
     const [division, setDivision] = useState({});
     useEffect(() => {
         let stateCode = JSON.stringify(division);
-        stateCode = stateCode.substring(stateCode.indexOf("/") + 1).replace("\"","");
+        stateCode = stateCode.substring(stateCode.indexOf("/") + 1).replaceAll("\"","");
         cities = City.getCitiesOfState("BD", stateCode)
     }, [division]);
     return (<div>
@@ -49,7 +49,8 @@ export default function UserAddForm(props) {
                 district: user.district,
                 division: user.division,
                 user_type: user.user_type,
-                stateCode : null
+                stateCode : null,
+                id:null
             }}
             validationSchema={Yup.object({
                 first_name: Yup
@@ -75,7 +76,7 @@ export default function UserAddForm(props) {
                         method: "POST", url: "https://60f2479f6d44f300177885e6.mockapi.io/users", data: values,
                     })
                         .then(response => {
-
+                            values.id = response.data.id
                             addUser(values)
                             handleClose()
                         })

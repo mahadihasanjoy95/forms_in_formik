@@ -28,7 +28,7 @@ export default function UserDetailsPage(props) {
             .get("https://60f2479f6d44f300177885e6.mockapi.io/users/" + id.replace(":", ""))
             .then(response => {
                 setUser(response.data)
-                setDivisionForShow(JSON.stringify(response.data.division).split("/")[0].replace("\"",""))
+                setDivisionForShow(JSON.stringify(response.data.division).split("/")[0].replaceAll("\"",""))
             })
             .catch(error => {
                 notify()

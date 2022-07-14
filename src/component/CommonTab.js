@@ -22,7 +22,7 @@ export default function CommonTab(props) {
                 </TableHead>
                 <TableBody>
                     {users.map(user =>(
-                        divisionForShow = JSON.stringify(user.division).split("/")[0].replace("\"",""),
+                        divisionForShow = JSON.stringify(user.division).split("/")[0].replaceAll("\"",""),
                         <TableRow key={user.id}>
                             <td></td>
                             <td>{user.first_name}</td>
